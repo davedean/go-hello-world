@@ -10,3 +10,12 @@ func TestHello(t *testing.T) {
         t.Errorf("got %q want %q", got, want)
     }
 }
+
+func TestHealth(t *testing.T) {
+    got := Health()
+    want := "OK - 200"
+
+    if got != want {
+        t.Errorf("got %q want %q", got, want)
+    }
+}
