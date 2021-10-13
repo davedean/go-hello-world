@@ -2,10 +2,9 @@
 FROM golang:alpine as builder
 
 WORKDIR /app
-ADD ./src/hello-http.go /app
+ADD ./src/http/ /app
 
 RUN go build -o http-server hello-http.go
-
 
 # golang again for running
 FROM golang:alpine
