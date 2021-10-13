@@ -1,17 +1,15 @@
 # use golang base for building
-FROM golang:latest as builder
+FROM golang:alpine as builder
 
-RUN mkdir /app
-ADD ./src/hello-http.go /app
 WORKDIR /app
+ADD ./src/hello-http.go /app
 
 RUN go build -o http-server hello-http.go
 
 
 # golang again for running
-FROM golang:latest
+FROM golang:alpine
 
-RUN mkdir /app
 WORKDIR /app
 COPY --from=builder /app/http-server /app/http-server
 
