@@ -19,5 +19,5 @@ func Hello() string {
 }
 
 func Health() string {
-    return "OK"
+    return "OK - 200"
 }
