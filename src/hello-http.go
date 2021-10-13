@@ -17,3 +17,7 @@ func main() {
 func Hello() string {
     return "Hello, World"
 }
+
+func Health() string {
+    return "OK"
+}
