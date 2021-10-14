@@ -1,6 +1,6 @@
 # Possible additions
 
-* [ ] Logging requests/responses
+* [x] ~~Logging requests/responses~~
 * [x] ~~Create multiple endpoint handler(s) [/health?]~~
 * [ ] Write to/from a data source (although it's hardly hello world at that point .. )
 * [x] ~~Use a CI tool to test/build (Github Actions?)~~
