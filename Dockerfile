@@ -2,7 +2,7 @@
 FROM golang:alpine as builder
 
 WORKDIR /app
-ADD ./src/ /app
+COPY ./src/ /app
 
 RUN go build -o http-server hello-http.go
 
