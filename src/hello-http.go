@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "net/http"
+    "time"
 )
 
 func main() {
@@ -30,8 +31,15 @@ func HandlerDefault(w http.ResponseWriter, r *http.Request) {
             Helloname = (r.RequestURI)[1:]
         }
         fmt.Fprintf(w, Hello(Helloname))
+        fmt.Println(niceTime(), "Served ", Helloname)
 }
 
 func HandlerHealth(w http.ResponseWriter, r *http.Request) {
         fmt.Fprintf(w, Health())
+        fmt.Println(niceTime(), "Served /health")
+}
+
+func niceTime () string {
+    timeString := time.Now().Format(time.RFC3339)
+        return timeString
 }
