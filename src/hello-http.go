@@ -14,7 +14,14 @@ func main() {
     http.HandleFunc("/", HandlerDefault)
     http.HandleFunc("/health", HandlerHealth)
 
-    log.Fatal(http.ListenAndServe(":8080", nil))
+    httpServer := &http.Server{
+        Addr: ":8080",
+        ReadTimeout: 5 * time.Second,
+        WriteTimeout: 10 * time.Second,
+        IdleTimeout:  120 * time.Second,
+    }
+
+    log.Fatal(httpServer.ListenAndServe())
 
 }
 
