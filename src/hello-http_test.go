@@ -3,6 +3,7 @@ package main
 import "testing"
 
 func TestHello(t *testing.T) {
+    // Test the 'Hello' function
     got := Hello("World")
     want := "Hello, World"
 
@@ -12,6 +13,7 @@ func TestHello(t *testing.T) {
 }
 
 func TestHealth(t *testing.T) {
+    // Test the 'Health' function
     got := Health()
     want := "OK - 200"
 
