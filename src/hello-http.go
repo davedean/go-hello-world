@@ -9,24 +9,9 @@ import (
 )
 
 // Set a global for run mode
-var runningMode = "Unknown"
+var runningMode = SetEnvironment(os.LookupEnv("HELLO_WORLD_ENV"))
 
 func main() {
-
-    helloWorldEnvironment, ok := os.LookupEnv("HELLO_WORLD_ENV")
-
-    if ok {
-        switch helloWorldEnvironment {
-            case "LCL" : runningMode = "Local"
-            case "DEV" : runningMode = "Development"
-            case "TST" : runningMode = "Testing"
-            case "STG" : runningMode = "Staging"
-            case "PRD" : runningMode = "Production"
-            default : runningMode = "Development"
-        }
-    } else {
-        runningMode = "Undefined"
-    }
 
     // Log startups to stdout
     fmt.Println(niceTime(), "Server start in", runningMode, "configuration.")
@@ -50,6 +35,30 @@ func main() {
     // Start HTTP server and listen
     log.Fatal(httpServer.ListenAndServe())
 
+}
+
+func SetEnvironment(helloWorldEnvironment string, ok bool) string {
+
+    // Set to "Unknown" before we try to determine.
+    runningMode := "Unknown"
+
+    // if the lookup succeeds set the Environment
+    if ok {
+        // various short codes -> strings ..
+        switch helloWorldEnvironment {
+            case "LCL" : runningMode = "Local"
+            case "DEV" : runningMode = "Development"
+            case "TST" : runningMode = "Testing"
+            case "STG" : runningMode = "Staging"
+            case "PRD" : runningMode = "Production"
+            default : runningMode = "Development"
+        }
+    } else {
+        // if not defined, make that explicit ..
+        runningMode = "Undefined"
+    }
+
+    return runningMode
 }
 
 func Hello(Helloname string) string {

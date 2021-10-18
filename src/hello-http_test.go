@@ -12,10 +12,19 @@ func TestHello(t *testing.T) {
     }
 }
 
+func TestSetEnvironment(t *testing.T) {
+    got := SetEnvironment("DEV", true)
+    want := "Development"
+
+    if got != want {
+        t.Errorf("got %q want %q", got, want)
+    }
+}
+
 func TestHealth(t *testing.T) {
     // Test the 'Health' function
     got := Health()
-    want := "OK - 200 - Unknown"
+    want := "OK - 200 - Undefined"
 
     if got != want {
         t.Errorf("got %q want %q", got, want)
