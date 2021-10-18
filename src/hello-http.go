@@ -13,8 +13,8 @@ var runningMode = SetEnvironment(os.LookupEnv("HELLO_WORLD_ENV"))
 
 func main() {
 
-    // Log startups to stdout
-    fmt.Println(niceTime(), "Server start in", runningMode, "configuration.")
+    // log startup
+    OutputLog("Server start in " + runningMode + " configuration.")
 
     // Define our "endpoints"
     http.HandleFunc("/", HandlerDefault)
@@ -61,6 +61,16 @@ func SetEnvironment(helloWorldEnvironment string, ok bool) string {
     return runningMode
 }
 
+func OutputLog(logString string) {
+
+    // RFC3339 - https://www.ietf.org/rfc/rfc3339.txt
+    // Example: 2021-10-15T13:16:23+11:00 Server start
+    timeString := time.Now().Format(time.RFC3339)
+
+    // output to stdout
+    fmt.Println(timeString, logString)
+}
+
 func Hello(Helloname string) string {
     // Small testable function
 
@@ -92,8 +102,8 @@ func HandlerDefault(w http.ResponseWriter, r *http.Request) {
     // Output to handler
     fmt.Fprintf(w, Hello(Helloname))
 
-    // "Log" output to stdout
-    fmt.Println(niceTime(), "Served ", Helloname)
+    // log output
+    OutputLog("Served " + Helloname)
 }
 
 func HandlerJason(w http.ResponseWriter, r *http.Request) {
@@ -101,21 +111,14 @@ func HandlerJason(w http.ResponseWriter, r *http.Request) {
     // Output to handler
     fmt.Fprintf(w, "Say, Jarvis, how much do you know about bitcoin?")
 
-    // "Log" output to stdout
-    fmt.Println(niceTime(), "Served /Jason")
+    // log output
+    OutputLog("Served /Jason")
 }
 
 func HandlerHealth(w http.ResponseWriter, r *http.Request) {
     // Output to handler
     fmt.Fprintf(w, Health())
 
-    // "Log" output to stdout
-    fmt.Println(niceTime(), "Served /health")
-}
-
-func niceTime () string {
-    // RFC3339 - https://www.ietf.org/rfc/rfc3339.txt
-    // Example: 2021-10-15T13:16:23+11:00 Server start
-    timeString := time.Now().Format(time.RFC3339)
-    return timeString
+    // log output
+    OutputLog("Served /health")
 }
