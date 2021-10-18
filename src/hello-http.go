@@ -34,6 +34,7 @@ func main() {
     // Define our "endpoints"
     http.HandleFunc("/", HandlerDefault)
     http.HandleFunc("/health", HandlerHealth)
+    http.HandleFunc("/Jason", HandlerJason)
 
     // Create the server
     httpServer := &http.Server{
