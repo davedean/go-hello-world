@@ -4,7 +4,7 @@ import "testing"
 
 func TestHello(t *testing.T) {
     // Test the 'Hello' function
-    got := Hello("World")
+    got := hello("World")
     want := "Hello, World"
 
     if got != want {
@@ -13,7 +13,7 @@ func TestHello(t *testing.T) {
 }
 
 func TestSetEnvironment(t *testing.T) {
-    got := SetEnvironment("DEV", true)
+    got := setEnvironment("DEV", true)
     want := "Development"
 
     if got != want {
@@ -23,7 +23,7 @@ func TestSetEnvironment(t *testing.T) {
 
 func TestHealth(t *testing.T) {
     // Test the 'Health' function
-    got := Health()
+    got := health()
     want := "OK - 200 - Undefined"
 
     if got != want {
