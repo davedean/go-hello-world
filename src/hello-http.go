@@ -9,17 +9,17 @@ import (
 )
 
 // Set a global for run mode
-var runningMode = SetEnvironment(os.LookupEnv("HELLO_WORLD_ENV"))
+var runningMode = setEnvironment(os.LookupEnv("HELLO_WORLD_ENV"))
 
 func main() {
 
     // log startup
-    OutputLog("Server start in " + runningMode + " configuration.")
+    outputLog("Server start in " + runningMode + " configuration.")
 
     // Define our "endpoints"
-    http.HandleFunc("/", HandlerDefault)
-    http.HandleFunc("/health", HandlerHealth)
-    http.HandleFunc("/Jason", HandlerJason)
+    http.HandleFunc("/", handlerDefault)
+    http.HandleFunc("/health", handlerHealth)
+    http.HandleFunc("/Jason", handlerJason)
 
     // Create the server
     httpServer := &http.Server{
@@ -37,7 +37,7 @@ func main() {
 
 }
 
-func SetEnvironment(helloWorldEnvironment string, ok bool) string {
+func setEnvironment(helloWorldEnvironment string, ok bool) string {
 
     // Set to "Unknown" before we try to determine.
     runningMode := "Unknown"
@@ -61,7 +61,7 @@ func SetEnvironment(helloWorldEnvironment string, ok bool) string {
     return runningMode
 }
 
-func OutputLog(logString string) {
+func outputLog(logString string) {
 
     // RFC3339 - https://www.ietf.org/rfc/rfc3339.txt
     // Example: 2021-10-15T13:16:23+11:00 Server start
@@ -71,54 +71,54 @@ func OutputLog(logString string) {
     fmt.Println(timeString, logString)
 }
 
-func Hello(Helloname string) string {
+func hello(helloName string) string {
     // Small testable function
 
-    Hellostring := "Hello, " + Helloname
+    helloString := "Hello, " + helloName
 
-    return Hellostring
+    return helloString
 }
 
 
-func Health() string {
+func health() string {
     // Small testable function - static output
     outputString := "OK - 200 - " + runningMode
     return outputString
 }
 
-func HandlerDefault(w http.ResponseWriter, r *http.Request) {
+func handlerDefault(w http.ResponseWriter, r *http.Request) {
 
-    var Helloname string
+    var helloName string
 
     // On '/' say 'World'
     if r.RequestURI == "/" {
-        Helloname = "World"
+        helloName = "World"
     } else {
     // Otherwise repeat the input, minus the slash
     // eg: for /foo -> "Hello, foo"
-        Helloname = (r.RequestURI)[1:]
+        helloName = (r.RequestURI)[1:]
     }
 
     // Output to handler
-    fmt.Fprintf(w, Hello(Helloname))
+    fmt.Fprintf(w, hello(helloName))
 
     // log output
-    OutputLog("Served " + Helloname)
+    outputLog("Served " + helloName)
 }
 
-func HandlerJason(w http.ResponseWriter, r *http.Request) {
+func handlerJason(w http.ResponseWriter, r *http.Request) {
     // Meme compliant response: https://imgflip.com/meme/243172133/Say-Jarvis
     // Output to handler
     fmt.Fprintf(w, "Say, Jarvis, how much do you know about bitcoin?")
 
     // log output
-    OutputLog("Served /Jason")
+    outputLog("Served /Jason")
 }
 
-func HandlerHealth(w http.ResponseWriter, r *http.Request) {
+func handlerHealth(w http.ResponseWriter, r *http.Request) {
     // Output to handler
-    fmt.Fprintf(w, Health())
+    fmt.Fprintf(w, health())
 
     // log output
-    OutputLog("Served /health")
+    outputLog("Served /health")
 }
