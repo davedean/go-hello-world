@@ -8,10 +8,12 @@ import (
     "os"
 )
 
+// Set a global for run mode
+var runningMode = "Unknown"
+
 func main() {
 
     helloWorldEnvironment, ok := os.LookupEnv("HELLO_WORLD_ENV")
-    runningMode := "Unknown"
 
     if ok {
         switch helloWorldEnvironment {
@@ -54,18 +56,14 @@ func Hello(Helloname string) string {
 
     Hellostring := "Hello, " + Helloname
 
-    // Meme compliant response: https://imgflip.com/meme/243172133/Say-Jarvis
-    // If the name is Jason, we should talk about bitcoin.
-    if ( Helloname == "Jason" ) {
-        Hellostring = "Say, Jarvis, how much do you know about bitcoin?"
-    }
-
     return Hellostring
 }
 
+
 func Health() string {
     // Small testable function - static output
-    return "OK - 200"
+    outputString := "OK - 200 - " + runningMode
+    return outputString
 }
 
 func HandlerDefault(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +84,15 @@ func HandlerDefault(w http.ResponseWriter, r *http.Request) {
 
     // "Log" output to stdout
     fmt.Println(niceTime(), "Served ", Helloname)
+}
+
+func HandlerJason(w http.ResponseWriter, r *http.Request) {
+    // Meme compliant response: https://imgflip.com/meme/243172133/Say-Jarvis
+    // Output to handler
+    fmt.Fprintf(w, "Say, Jarvis, how much do you know about bitcoin?")
+
+    // "Log" output to stdout
+    fmt.Println(niceTime(), "Served /Jason")
 }
 
 func HandlerHealth(w http.ResponseWriter, r *http.Request) {
