@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # move to script location so docker commands have correct files
 cd "$(dirname "$0")"/..
