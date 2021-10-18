@@ -34,7 +34,15 @@ func main() {
 
 func Hello(Helloname string) string {
     // Small testable function
+
     Hellostring := "Hello, " + Helloname
+
+    // Meme compliant response: https://imgflip.com/meme/243172133/Say-Jarvis
+    // If the name is Jason, we should talk about bitcoin.
+    if ( Helloname == "Jason" ) {
+        Hellostring = "Say, Jarvis, how much do you know about bitcoin?"
+    }
+
     return Hellostring
 }
 
