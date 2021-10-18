@@ -19,3 +19,6 @@ spec:
         image: localhost:5000/go-hello-world
         ports:
         - containerPort: 8080
+        env:
+        - name: HELLO_WORLD_ENV
+          value: 'LCL'
