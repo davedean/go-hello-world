@@ -1,6 +1,6 @@
 # go-hello-world
 
-A basic hello world app in Go so I have a simple "middleware" to use for deploying.
+A basic hello world app in Go so I have a simple "middleware" to use for deploying, and some deployment examples.
 
 Middleware related:
 * src               - http hello world
