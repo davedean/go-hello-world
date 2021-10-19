@@ -17,8 +17,27 @@ spec:
       containers:
       - name: hello-world
         image: localhost:5000/go-hello-world
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
         ports:
         - containerPort: 8080
         env:
         - name: HELLO_WORLD_ENV
           value: 'LCL'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+spec:
+  selector:
+    app: hello-world
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
