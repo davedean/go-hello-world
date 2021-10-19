@@ -1,8 +1,12 @@
 # go-hello-world
 
-A basic hello world in Go. Soon to include various deployment examples.
+A basic hello world app in Go so I have a simple "middleware" to use for deploying, and some deployment examples.
+
+## Middleware related:
 
 * src               - http hello world
 * Dockerfile        - runs http hello world
 * .github/workflows - some simple CI Github Actions to build/test on PR and commits to main
-* minikube          - a basic minikube deployment example
+
+## Deploy Examples:
+* minikube          - a basic minikube deployment for local development
