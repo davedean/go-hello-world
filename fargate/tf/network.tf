@@ -23,6 +23,8 @@ resource "aws_subnet" "public_subnet" {
     }
 }
 
+### Private Subnets and related infra
+
 # Private Subnets
 resource "aws_subnet" "private_subnet" {
   count                   = length(data.aws_availability_zones.available.names)
@@ -64,4 +66,6 @@ resource "aws_nat_gateway" "private_nat-gw" {
   subnet_id     = element(aws_subnet.private_subnet.*.id, 1)
   # depends_on    = ["aws_internet_gateway.myInternetGateway"]
 }
+
+### End Private Subnets and related infra
 
