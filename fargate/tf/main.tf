@@ -11,10 +11,13 @@ terraform {
     }
 
     backend "s3" {
-        // bucket = is not specified here, and is provided by backend.tfvars
+        // note: bucket = is not specified here, and is provided by backend.tfvars
         key     = "fg-tf-main"
 
         region  = "ap-southeast-2"
         encrypt = true
+
+        // nb: in a production setting you should use DynamoDB to manage locking
+        // but there's exactly one user of this repo, so not doing it here.
     }
 }
