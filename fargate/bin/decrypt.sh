@@ -3,6 +3,9 @@
 # decrypts input 
 # outputs decrypted lines
 # could be better, but you get the idea.
+#
+# secrets can be encrypted with shush directly
+# eg: `shush encrypt <keyname> <secret>`
 
 
 while IFS= read -r line; do
