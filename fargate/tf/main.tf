@@ -2,6 +2,7 @@ provider aws {
     region = "ap-southeast-2"
 }
 
+
 terraform {
     required_providers {
         aws = {
@@ -11,15 +12,9 @@ terraform {
     }
 
     backend "s3" {
-        bucket  = "ghw-tf-state"
-        key     = "tf-example"
+        // bucket = is not specified here, and is provided by backend.tfvars
+        key     = "fg-tf-main"
         region  = "ap-southeast-2"
         encrypt = true
     }
-}
-
-// State bucket
-resource "aws_s3_bucket" "tf_course" {
-    bucket = "ghw-tf-state"
-    acl = "private"
 }

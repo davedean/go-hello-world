@@ -4,4 +4,4 @@ If we include the Terraform S3 State Bucket in the "main" terraform, it would be
 
 So I'm keeping the S3 bucket creation separate from the main terraform.
 
-I may bring other "shared" components in here, but for now, this is just for bootstrapping terraform itself.
+Additionally, in order to securely store secrets such as the s3 backend, we need to be able to `shush`. In order to `shush` we need a KMS key, so that is also created here.
