@@ -13,7 +13,6 @@ terraform {
     backend "s3" {
         // bucket = is not specified here, and is provided by backend.tfvars
         key     = "fg-tf-main"
-
         region  = "ap-southeast-2"
         encrypt = true
     }
