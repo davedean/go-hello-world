@@ -1,3 +1,5 @@
+/*
+
 resource "aws_ecr_repository" "go-hello-world" {
     name                 = "go-hello-world"
 }
@@ -38,3 +40,4 @@ resource "aws_ecr_lifecycle_policy" "go-hello-world-repo-policy" {
 EOF
 }
 
+*/
