@@ -9,7 +9,7 @@ resource "aws_vpc" "fg_tf_vpc" {
 }
 
 locals {
-    # complicated way to obtain first two octets of VPC 
+    # obtain first two octets of VPC, to create smaller subnets within
     vpc_cidr-block_fragment =  join(".", [ split(".", var.vpc_cidr-block)[0], split(".", var.vpc_cidr-block)[1] ] )
 }
 
@@ -63,7 +63,6 @@ resource "aws_route_table_association" "route-assoc_public" {
 resource "aws_subnet" "private_subnet" {
     count                   = length(data.aws_availability_zones.available.names)
     vpc_id                  = aws_vpc.fg_tf_vpc.id
-    #cidr_block              = "10.0.${40+count.index}.0/24"
     cidr_block              = "${local.vpc_cidr-block_fragment}.${10+count.index}.0/24"
     availability_zone       = data.aws_availability_zones.available.names[count.index]
     map_public_ip_on_launch = false
