@@ -5,9 +5,7 @@ resource "aws_vpc" "fg_tf_vpc" {
     cidr_block = "10.0.0.0/16" 
     enable_dns_hostnames = true
 
-    tags = {
-        Name = "Fargate Example VPC"
-    }
+    tags = { Name = "Fargate Example VPC" }
 }
 
 ### Public Subnets and related infra
@@ -19,11 +17,15 @@ resource "aws_subnet" "public_subnet" {
     cidr_block              = "10.0.${0+count.index}.0/24"
     availability_zone       = data.aws_availability_zones.available.names[count.index]
     map_public_ip_on_launch = true
+
+    tags = { Name = "Fargate Public Subnet" }
 }
 
 # Internet GW
 resource "aws_internet_gateway" "internet-gw" {
     vpc_id = aws_vpc.fg_tf_vpc.id
+
+    tags = { Name = "Fargate Example IGW" }
 }
 
 
@@ -35,6 +37,8 @@ resource "aws_route_table" "route-table_public" {
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.internet-gw.id
     }
+
+    tags = { Name = "Fargate Public RT" }
 }
 
 # Assoc route table with public subnets
@@ -56,6 +60,8 @@ resource "aws_subnet" "private_subnet" {
     cidr_block              = "10.0.${40+count.index}.0/24"
     availability_zone       = data.aws_availability_zones.available.names[count.index]
     map_public_ip_on_launch = false
+
+    tags = { Name = "Fargate Private Subnet" }
 }
 
 # Route table for Private Subnets
@@ -66,6 +72,8 @@ resource "aws_route_table" "route-table_private" {
         cidr_block     = "0.0.0.0/0"
         nat_gateway_id = aws_nat_gateway.private_nat-gw.id
     }
+
+    tags = { Name = "Fargate Private RT" }
 }
 
 # Assoc route table with private subnets
@@ -78,6 +86,8 @@ resource "aws_route_table_association" "private_route" {
 # NAT gateway requires an EIP
 resource "aws_eip" "private_nat-gw_eip" {
     vpc = true
+
+    tags = { Name = "Fargate Private NAT GW EIP"  }
 }
 
 # NAT Gateway
@@ -85,7 +95,8 @@ resource "aws_nat_gateway" "private_nat-gw" {
     allocation_id = aws_eip.private_nat-gw_eip.id
     subnet_id     = element(aws_subnet.private_subnet.*.id, 1)
     depends_on    = [ aws_internet_gateway.internet-gw ]
+
+    tags = { Name = "Fargate Private NAT GW"  }
 }
 
 ### End Private Subnets and related infra
-
