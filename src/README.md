@@ -10,4 +10,5 @@ Features:
 
 - responds on / with "Hello, World"
 - responds on /foo with "Hello, foo"
+- returns on /favicon.ico with a png
 - responds on another endpoint
