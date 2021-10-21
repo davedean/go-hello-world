@@ -11,3 +11,6 @@ variable "environment" {
 
 variable "environment_short-code" {
 }
+
+variable "service_name" {
+}

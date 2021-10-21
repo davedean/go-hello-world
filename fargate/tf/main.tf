@@ -1,5 +1,12 @@
 provider aws {
     region = "ap-southeast-2"
+
+    default_tags {
+        tags = {
+            Environment = "${var.environment}"
+            Service     = "${var.service_name}"
+        }
+    }
 }
 
 terraform {
