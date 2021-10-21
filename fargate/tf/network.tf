@@ -2,7 +2,7 @@
 data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "fg_tf_vpc" {
-    cidr_block = "10.0.0.0/16" 
+    cidr_block = var.vpc_cidr-block
     enable_dns_hostnames = true
 
     tags = { Name = "Fargate Example VPC" }
@@ -14,7 +14,7 @@ resource "aws_vpc" "fg_tf_vpc" {
 resource "aws_subnet" "public_subnet" {
     count                   = length(data.aws_availability_zones.available.names)
     vpc_id                  = aws_vpc.fg_tf_vpc.id
-    cidr_block              = "10.0.${0+count.index}.0/24"
+    cidr_block              = "${var.vpc_cidr-block_fragment}.${0+count.index}.0/24"
     availability_zone       = data.aws_availability_zones.available.names[count.index]
     map_public_ip_on_launch = true
 
