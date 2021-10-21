@@ -1,4 +1,5 @@
-# this file contains encrypted values which must be decrypted with KMS to use.
+# this file contains encrypted values which must be decrypted with Shush to use.
+# check project README.md for more details
 
 # example decryption: ../bin/decrypt.sh < backend.tfvars.shush > backend.tfvars.decrypted
 # example usage (once decrypted): `terraform init --backend-config=backend.tfvars.decrypted`

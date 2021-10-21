@@ -4,6 +4,8 @@
 # decrypt.sh - uses shush to decrypt input and print to output
 # useful for decrypting tfvar files for example.
 
+# https://github.com/realestate-com-au/shush
+
 # Usage ideas: 
 # ./decrypt.sh < input_file 
 # echo SHUSH_secret | ./decrypt.sh 
