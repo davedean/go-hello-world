@@ -1,7 +1,5 @@
-/*
-
 resource "aws_ecr_repository" "go-hello-world" {
-    name                 = "go-hello-world"
+    name                 = var.service_name
 }
 
 resource "aws_ecr_lifecycle_policy" "go-hello-world-repo-policy" {
@@ -39,5 +37,3 @@ resource "aws_ecr_lifecycle_policy" "go-hello-world-repo-policy" {
 }
 EOF
 }
-
-*/
