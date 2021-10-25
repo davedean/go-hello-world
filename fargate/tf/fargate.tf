@@ -11,7 +11,7 @@ resource "aws_ecs_service" "ecs_service" {
     name            = "${var.service_name}-${var.environment_short-code}"
     cluster         = aws_ecs_cluster.ecs_cluster.id
     task_definition = aws_ecs_task_definition.definition.arn
-    desired_count   = 3
+    desired_count   = 1
     iam_role        = module.iam.ecs_task_role.arn
     depends_on      = [module.iam]
     launch_type     = "FARGATE"
@@ -46,10 +46,6 @@ resource "aws_ecs_task_definition" "definition" {
                     "awslogs-stream-prefix" : "${var.service_name}-${var.environment_short-code}"
                 }
             },
-    "secrets": [{
-        "name": "secret_variable_name",
-        "valueFrom": "arn:aws:ssm:region:acount:parameter/parameter_name"
-    }],           
     "environment": [
             {
                 "name": "HELLO_WORLD_ENVIRONMENT",

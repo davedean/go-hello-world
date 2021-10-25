@@ -1,6 +1,6 @@
 # Roles for task execution
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecs-task-execution-role"
+  name = "ecs_task_execution_role"
 
   assume_role_policy = <<EOF
 {
@@ -21,7 +21,7 @@ EOF
 }
 
 resource "aws_iam_role" "ecs_task_role" {
-  name = "ecs-task-role"
+  name = "ecs_task_role"
 
   assume_role_policy = <<EOF
 {
@@ -46,7 +46,7 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attach
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_iam_role_policy_attachment" "task_s3" {
-  role       = "${aws_iam_role.ecs_task_role.name}"
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }

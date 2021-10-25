@@ -2,6 +2,7 @@
 resource "aws_security_group" "sg_alb_private" {
     name        = "lb-sg"
     description = "controls access to the Application Load Balancer (ALB)"
+    vpc_id      = aws_vpc.fg_tf_vpc.id
 
     ingress {
         protocol    = "tcp"
@@ -22,6 +23,7 @@ resource "aws_security_group" "sg_alb_private" {
 resource "aws_security_group" "ecs_tasks" {
     name        = "ecs-tasks-sg"
     description = "allow inbound access from the ALB only"
+    vpc_id      = aws_vpc.fg_tf_vpc.id
 
     ingress {
         protocol        = "tcp"

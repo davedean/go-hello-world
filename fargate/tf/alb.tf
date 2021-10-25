@@ -18,7 +18,7 @@ resource "aws_lb_listener" "https-fwd_private" {
 }
 
 resource "aws_lb_target_group" "lb-tg_private" {
-    name        = "dummyapi-alb-tg"
+    name        = "alb-tg"
     port        = 8080
     protocol    = "HTTP"
     vpc_id      = aws_vpc.fg_tf_vpc.id
