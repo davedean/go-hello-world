@@ -12,8 +12,8 @@ resource "aws_ecs_service" "ecs_service" {
     cluster         = aws_ecs_cluster.ecs_cluster.id
     task_definition = aws_ecs_task_definition.definition.arn
     desired_count   = 1
-    iam_role        = module.iam.ecs_task_role.arn
-    depends_on      = [module.iam]
+    iam_role        = aws_iam_role.ecs_task_role.arn
+    depends_on      = [ aws_iam_role.ecs_task_role ]
     launch_type     = "FARGATE"
 
     load_balancer {
@@ -27,8 +27,8 @@ resource "aws_ecs_service" "ecs_service" {
 # define our task
 resource "aws_ecs_task_definition" "definition" {
     family                   = "task_definition_name"
-    task_role_arn            = module.iam.ecs_task_role.arn
-    execution_role_arn       = module.iam.ecs_task_execution_role.arn
+    task_role_arn            = aws_iam_role.ecs_task_role.arn
+    execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
     network_mode             = "awsvpc"
     cpu                      = "256"
     memory                   = "1024"
