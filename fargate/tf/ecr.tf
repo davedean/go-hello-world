@@ -1,9 +1,9 @@
-resource "aws_ecr_repository" "go-hello-world" {
+resource "aws_ecr_repository" ecr_repository {
     name                 = var.service_name
 }
 
-resource "aws_ecr_lifecycle_policy" "go-hello-world-repo-policy" {
-    repository = aws_ecr_repository.go-hello-world.name
+resource "aws_ecr_lifecycle_policy" repo-policy {
+    repository = aws_ecr_repository.ecr_repository.name
 
     policy = <<EOF
 {

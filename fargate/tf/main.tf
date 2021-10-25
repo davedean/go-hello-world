@@ -28,3 +28,11 @@ terraform {
         dynamodb_table = "fg-tf-main_tf-lock"
     }
 }
+
+# call modules
+module iam {
+    source       = "./modules/iam"
+    service_name = var.service_name
+    environment  = var.environment
+}
+
