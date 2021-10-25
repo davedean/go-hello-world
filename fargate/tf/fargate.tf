@@ -7,6 +7,23 @@ locals {
     account_id = data.aws_caller_identity.current.account_id
 }
 
+resource "aws_ecs_service" "ecs_service" {
+    name            = "${var.service_name}-${var.environment_short-code}"
+    cluster         = aws_ecs_cluster.ecs_cluster.id
+    task_definition = aws_ecs_task_definition.definition.arn
+    desired_count   = 3
+    iam_role        = module.iam.ecs_task_role.arn
+    depends_on      = [module.iam]
+    launch_type     = "FARGATE"
+
+    load_balancer {
+        target_group_arn = aws_lb_target_group.lb-tg_private.arn
+        container_name   = "${var.service_name}"
+        container_port   = 8080
+    }
+
+}
+
 # define our task
 resource "aws_ecs_task_definition" "definition" {
     family                   = "task_definition_name"
@@ -19,7 +36,7 @@ resource "aws_ecs_task_definition" "definition" {
     container_definitions = <<DEFINITION
 [
   {
-    "image": "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/project:latest",
+    "image": "${local.account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.service_name}:latest",
     "name": "${var.service_name}-${var.environment_short-code}-container",
     "logConfiguration": {
                 "logDriver": "awslogs",
