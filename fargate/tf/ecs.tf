@@ -1,5 +1,4 @@
-/*
-resource "aws_ecs_cluster" "ghw-cluster" {
-    name = "ghw-cluster"
+# ECS Cluster
+resource "aws_ecs_cluster" ecs_cluster {
+    name = "${var.service_name}-${var.environment}-cluster"
 }
-*/

@@ -105,7 +105,7 @@ resource "aws_eip" "private_nat-gw_eip" {
 # NAT Gateway
 resource "aws_nat_gateway" "private_nat-gw" {
     allocation_id = aws_eip.private_nat-gw_eip.id
-    subnet_id     = element(aws_subnet.private_subnet.*.id, 1)
+    subnet_id     = element(aws_subnet.public_subnet.*.id, 1)
     depends_on    = [ aws_internet_gateway.internet-gw ]
 
     tags = { Name = "${var.service_name} Private NAT GW - ${var.environment_short-code}"  }

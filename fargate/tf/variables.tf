@@ -18,3 +18,7 @@ variable "vpc_subnet-splits" {
 variable "subnet-splits" {
     default = "4"
 }
+
+variable "aws_region" {
+    default = "ap-southeast-2"
+}
