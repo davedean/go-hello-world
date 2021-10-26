@@ -20,6 +20,7 @@ EOF
     tags = { Name = "${var.service_name}-${var.environment}-execution-role" }
 }
 
+# task role
 resource "aws_iam_role" "ecs_task_role" {
   name = "ecs_task_role"
 
@@ -47,6 +48,31 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attach
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
-  role       = aws_iam_role.ecs_task_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+    role       = aws_iam_role.ecs_task_role.name
+    policy_arn = aws_iam_policy.task_role_policy.arn
+}
+
+
+resource "aws_iam_policy" "task_role_policy" {
+  name = "task_role_policy"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+    {
+        "Effect": "Allow",
+        "Action": [
+            "ecr:GetAuthorizationToken",
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:BatchGetImage",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
 }
