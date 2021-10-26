@@ -12,20 +12,20 @@ resource "aws_ecs_service" "ecs_service" {
     cluster         = aws_ecs_cluster.ecs_cluster.id
     task_definition = aws_ecs_task_definition.definition.arn
     desired_count   = 1
-    iam_role        = aws_iam_role.ecs_task_role.arn
+/*    iam_role        = aws_iam_role.ecs_task_role.arn */
     depends_on      = [ aws_iam_role.ecs_task_role ]
     launch_type     = "FARGATE"
     network_configuration {
         subnets     = aws_subnet.private_subnet.*.id
     }
 
-
+/*
     load_balancer {
         target_group_arn = aws_lb_target_group.alb-tg_private.arn
         container_name   = "${var.service_name}"
         container_port   = 8080
     }
-
+*/
 
 }
 
