@@ -3,7 +3,7 @@ service_name            = "go-hello-world"
 
 # Environment name
 environment             = "Development"
-environment_short-code  = "Dev"
+environment_short-code  = "DEV"
 
 # VPC details
 vpc_cidr-block          = "10.8.0.0/16"
