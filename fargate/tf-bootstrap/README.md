@@ -1,4 +1,4 @@
-# Terraform S3 State Bucket
+# Terraform Bootstrap
 
 If we include the Terraform S3 State Bucket in the "main" terraform, it would be destroyed when we run a `terraform destroy`. This would createproblems, as we'd no longer be able to store state.
 
