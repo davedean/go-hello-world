@@ -28,3 +28,10 @@ terraform {
         dynamodb_table = "fg-tf-main_tf-lock"
     }
 }
+
+module "network" {
+    source                  = "./modules/network"
+    service_name            = var.service_name
+    environment             = var.environment
+    environment_short-code  = var.environment_short-code
+}

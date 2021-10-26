@@ -16,7 +16,7 @@ resource "aws_ecs_service" "ecs_service" {
     depends_on      = [ aws_iam_role.ecs_task_role ]
     launch_type     = "FARGATE"
     network_configuration {
-        subnets     = aws_subnet.private_subnet.*.id
+        subnets     = module.network.private_subnets.*.id
     }
 
 /*

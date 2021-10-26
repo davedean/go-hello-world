@@ -1,18 +1,18 @@
 # Set up locals
 locals {
     # split the vpc cidr (leaves half our space free for the future)
-    subnet-block_public  = cidrsubnet(var.vpc_cidr-block, var.vpc_subnet-splits, 0)
-    subnet-block_private = cidrsubnet(var.vpc_cidr-block, var.vpc_subnet-splits, 1)
+    subnet-block_public  = cidrsubnet(var.vpc_cidr-block, var.vpc_subnet-bits, 0)
+    subnet-block_private = cidrsubnet(var.vpc_cidr-block, var.vpc_subnet-bits, 1)
 
     # split the subnet-block cidr (var->local here for readability)
-    subnet-splits = var.subnet-splits
+    subnet-bits = var.subnet-bits
 }
 
 # Get availability zone data
 data "aws_availability_zones" "available" {}
 
 # VPC
-resource "aws_vpc" "fg_tf_vpc" {
+resource "aws_vpc" "service_vpc" {
     cidr_block = var.vpc_cidr-block
     enable_dns_hostnames = true
 
@@ -25,8 +25,8 @@ resource "aws_vpc" "fg_tf_vpc" {
 resource "aws_subnet" "public_subnet" {
 
     count                   = length(data.aws_availability_zones.available.names)
-    vpc_id                  = aws_vpc.fg_tf_vpc.id
-    cidr_block              = cidrsubnet(local.subnet-block_public, local.subnet-splits, count.index)
+    vpc_id                  = aws_vpc.service_vpc.id
+    cidr_block              = cidrsubnet(local.subnet-block_public, local.subnet-bits, count.index)
     availability_zone       = data.aws_availability_zones.available.names[count.index]
     map_public_ip_on_launch = true
 
@@ -35,7 +35,7 @@ resource "aws_subnet" "public_subnet" {
 
 # Internet GW
 resource "aws_internet_gateway" "internet-gw" {
-    vpc_id = aws_vpc.fg_tf_vpc.id
+    vpc_id = aws_vpc.service_vpc.id
 
     tags = { Name = "${var.service_name} IGW - ${var.environment_short-code}" }
 }
@@ -43,7 +43,7 @@ resource "aws_internet_gateway" "internet-gw" {
 
 # Routing table for public subnets
 resource "aws_route_table" "route-table_public" {
-    vpc_id = aws_vpc.fg_tf_vpc.id
+    vpc_id = aws_vpc.service_vpc.id
 
     route {
         cidr_block = "0.0.0.0/0"
@@ -68,8 +68,8 @@ resource "aws_route_table_association" "route-assoc_public" {
 # Private Subnets
 resource "aws_subnet" "private_subnet" {
     count                   = length(data.aws_availability_zones.available.names)
-    vpc_id                  = aws_vpc.fg_tf_vpc.id
-    cidr_block              = cidrsubnet(local.subnet-block_private, local.subnet-splits, count.index)
+    vpc_id                  = aws_vpc.service_vpc.id
+    cidr_block              = cidrsubnet(local.subnet-block_private, local.subnet-bits, count.index)
     availability_zone       = data.aws_availability_zones.available.names[count.index]
     map_public_ip_on_launch = false
 
@@ -78,7 +78,7 @@ resource "aws_subnet" "private_subnet" {
 
 # Route table for Private Subnets
 resource "aws_route_table" "route-table_private" {
-    vpc_id = aws_vpc.fg_tf_vpc.id
+    vpc_id = aws_vpc.service_vpc.id
 
     route {
         cidr_block     = "0.0.0.0/0"

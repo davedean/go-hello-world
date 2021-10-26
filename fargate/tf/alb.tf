@@ -1,6 +1,6 @@
 resource "aws_lb" "alb_private" {
     name               = "alb-private"
-    subnets            = aws_subnet.private_subnet.*.id
+    subnets            = module.network.private_subnets.*.id
     load_balancer_type = "application"
     security_groups    = [aws_security_group.sg_alb_private.id]
 }
@@ -21,7 +21,7 @@ resource "aws_lb_target_group" "alb-tg_private" {
     name        = "alb-private-tg"
     port        = 8080
     protocol    = "HTTP"
-    vpc_id      = aws_vpc.fg_tf_vpc.id
+    vpc_id      = module.network.service_vpc.id
     target_type = "ip"
 
     health_check {
